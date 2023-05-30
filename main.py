@@ -1,10 +1,11 @@
 import berserk
 from decouple import config
 
+player_name = "sadrda"
 session = berserk.TokenSession(config("LICHESS_KEY"))
 client = berserk.Client(session=session)
 
-games = client.games.export_by_player("sadrda")
+games = client.games.export_by_player(player_name)
 
 past_game_search_threshold = 1000
 game_count = 0
@@ -20,9 +21,9 @@ for game in games:
     players = game["players"]
 
     if("user" in players["white"].keys()):
-        color = "white" if players["white"]["user"]["name"] == "sadrda" else "black"
+        color = "white" if players["white"]["user"]["name"] == player_name else "black"
     if("user" in players["black"].keys()):
-        color = "black" if players["black"]["user"]["name"] == "sadrda" else "white"
+        color = "black" if players["black"]["user"]["name"] == player_name else "white"
 
     if status in status_hist.keys():
         status_hist[status] += 1
